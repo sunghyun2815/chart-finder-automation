@@ -1,0 +1,44 @@
+{
+  "name": "chart-finder-automation",
+  "version": "1.0.0",
+  "description": "GitHub Actions + Manus Agent를 활용한 주간 Spotify 차트 자동화 시스템",
+  "main": "index.js",
+  "scripts": {
+    "start": "node scripts/run-all.js",
+    "scrape": "node scripts/scrape-kworb.js",
+    "credits": "node scripts/trigger-manus-agent.js",
+    "youtube": "node scripts/get-youtube-links.js",
+    "generate": "node scripts/generate-html.js",
+    "build": "npm run scrape && npm run credits && npm run youtube && npm run generate",
+    "dev": "npm run build && npx http-server dist -p 3000",
+    "test": "jest",
+    "lint": "eslint scripts/**/*.js",
+    "clean": "rimraf data dist"
+  },
+  "keywords": [
+    "spotify",
+    "chart",
+    "automation",
+    "github-actions",
+    "manus-agent"
+  ],
+  "author": "Chart Finder Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.6.0",
+    "cheerio": "^1.0.0-rc.12",
+    "dotenv": "^16.3.1",
+    "googleapis": "^128.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.50.0",
+    "http-server": "^14.1.1",
+    "jest": "^29.7.0",
+    "nodemon": "^3.0.1",
+    "rimraf": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
+

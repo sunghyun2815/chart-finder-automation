@@ -1,0 +1,358 @@
+/* 레트로 터미널 스타일 CSS */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'VT323', monospace;
+    background-color: #000;
+    color: #ff6600;
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.terminal-container {
+    width: 100vw;
+    height: 100vh;
+    border: 3px solid #ff6600;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.terminal-header {
+    background-color: #ff6600;
+    color: #000;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.header-title {
+    font-size: 20px;
+}
+
+.header-rank {
+    font-size: 16px;
+}
+
+.terminal-content {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    overflow: hidden;
+}
+
+.chart-info {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+.rank-display {
+    font-size: 120px;
+    font-weight: bold;
+    color: #ff6600;
+    text-shadow: 0 0 10px #ff6600;
+    min-width: 150px;
+    text-align: center;
+}
+
+.song-details {
+    flex: 1;
+}
+
+.song-title {
+    font-size: 36px;
+    color: #fff;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    line-height: 1.2;
+}
+
+.artist-name {
+    font-size: 28px;
+    color: #ff6600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.album-name {
+    font-size: 20px;
+    color: #888;
+    text-transform: uppercase;
+}
+
+.credits-and-video {
+    display: flex;
+    gap: 40px;
+    flex: 1;
+    min-height: 0;
+}
+
+.production-credits {
+    flex: 1;
+    min-width: 400px;
+}
+
+.production-credits h4 {
+    font-size: 18px;
+    color: #ff6600;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ff6600;
+    padding-bottom: 5px;
+}
+
+.production-credits ul {
+    list-style: none;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.production-credits li {
+    margin-bottom: 8px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.credit-role {
+    color: #ff6600;
+    font-weight: bold;
+    min-width: 150px;
+    text-transform: uppercase;
+}
+
+.credit-people {
+    color: #fff;
+    flex: 1;
+}
+
+.video-player {
+    flex: 1;
+    min-width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ff00ff;
+    border-radius: 8px;
+    background-color: #111;
+    position: relative;
+}
+
+#youtube-player {
+    width: 100%;
+    height: 100%;
+    min-height: 300px;
+}
+
+.video-unavailable {
+    color: #888;
+    font-size: 18px;
+    text-align: center;
+    padding: 40px;
+}
+
+.terminal-footer {
+    background-color: #ff6600;
+    height: 20px;
+    position: relative;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 0 20px;
+}
+
+.progress-dot {
+    width: 12px;
+    height: 12px;
+    border: 1px solid #ff6600;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+}
+
+.progress-dot.active {
+    background-color: #ff6600;
+}
+
+.progress-dot.current {
+    background-color: #fff;
+    box-shadow: 0 0 5px #fff;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1200px) {
+    .credits-and-video {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .production-credits,
+    .video-player {
+        min-width: auto;
+    }
+    
+    .chart-info {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    
+    .rank-display {
+        font-size: 80px;
+        min-width: auto;
+    }
+    
+    .song-title {
+        font-size: 28px;
+    }
+    
+    .artist-name {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 768px) {
+    .terminal-content {
+        padding: 15px;
+        gap: 15px;
+    }
+    
+    .terminal-header {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .header-title {
+        font-size: 16px;
+    }
+    
+    .rank-display {
+        font-size: 60px;
+    }
+    
+    .song-title {
+        font-size: 22px;
+    }
+    
+    .artist-name {
+        font-size: 18px;
+    }
+    
+    .album-name {
+        font-size: 16px;
+    }
+    
+    .production-credits h4 {
+        font-size: 16px;
+    }
+    
+    .production-credits li {
+        font-size: 12px;
+        flex-direction: column;
+        gap: 2px;
+    }
+    
+    .credit-role {
+        min-width: auto;
+    }
+    
+    #youtube-player {
+        min-height: 200px;
+    }
+}
+
+/* 애니메이션 효과 */
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.glow {
+    text-shadow: 0 0 10px currentColor;
+}
+
+/* 스크롤바 스타일 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #000;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff6600;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff8833;
+}
+
+/* 로딩 애니메이션 */
+.loading {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ff6600;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* 키보드 네비게이션 힌트 */
+.keyboard-hint {
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    font-size: 12px;
+    color: #666;
+    opacity: 0.7;
+}
+
+.keyboard-hint kbd {
+    background: #333;
+    border: 1px solid #666;
+    border-radius: 3px;
+    padding: 2px 6px;
+    font-family: inherit;
+    font-size: 11px;
+}
+

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPOTIFY GLOBAL WEEKLY v8.41</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="terminal-container">
+        <header class="terminal-header">
+            <div class="header-title">SPOTIFY GLOBAL WEEKLY v8.41</div>
+            <div class="header-rank">RANK #<span id="current-rank">1</span>/30</div>
+        </header>
+        <main class="terminal-content">
+            <div class="chart-info">
+                <div class="rank-display" id="rank-display">01</div>
+                <div class="song-details">
+                    <h1 class="song-title" id="song-title"></h1>
+                    <h2 class="artist-name" id="artist-name"></h2>
+                    <h3 class="album-name" id="album-name"></h3>
+                </div>
+            </div>
+            <div class="credits-and-video">
+                <div class="production-credits">
+                    <h4>PRODUCTION CREDITS</h4>
+                    <ul id="credits-list"></ul>
+                </div>
+                <div class="video-player">
+                    <div id="youtube-player"></div>
+                </div>
+            </div>
+        </main>
+        <footer class="terminal-footer">
+            <div class="progress-bar" id="progress-bar"></div>
+        </footer>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // {{CHART_DATA}}
+    </script>
+    <script src="assets/script.js"></script>
+</body>
+</html>
+

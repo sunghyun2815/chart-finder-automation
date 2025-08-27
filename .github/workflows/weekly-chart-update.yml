@@ -1,0 +1,111 @@
+name: Weekly Chart Update
+
+on:
+  schedule:
+    # 매주 월요일 00:00 UTC (한국시간 09:00)에 실행
+    - cron: '0 0 * * 1'
+  
+  # 수동 실행 가능
+  workflow_dispatch:
+    inputs:
+      chart_range:
+        description: 'Number of chart positions to process (default: 30)'
+        required: false
+        default: '30'
+        type: string
+
+jobs:
+  update-chart:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: 📦 Install dependencies
+        run: npm ci
+        
+      - name: 🌐 Scrape kworb chart data
+        run: node scripts/scrape-kworb.js
+        env:
+          CHART_RANGE: ${{ github.event.inputs.chart_range || '30' }}
+          
+      - name: 🎵 Collect TIDAL credits via Manus Agent
+        run: node scripts/trigger-manus-agent.js
+        env:
+          MANUS_API_KEY: ${{ secrets.MANUS_API_KEY }}
+          MANUS_API_BASE_URL: ${{ secrets.MANUS_API_BASE_URL || 'https://api.manus.ai' }}
+          
+      - name: 📺 Get YouTube links
+        run: node scripts/get-youtube-links.js
+        env:
+          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
+          
+      - name: 🏗️ Generate HTML file
+        run: node scripts/generate-html.js
+        env:
+          CHART_DATE: ${{ github.run_id }}
+          
+      - name: 📊 Upload artifacts (for debugging)
+        uses: actions/upload-artifact@v3
+        with:
+          name: chart-data-${{ github.run_id }}
+          path: |
+            data/
+            dist/
+          retention-days: 7
+          
+      - name: 🚀 Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true
+          
+      - name: 📝 Create release
+        if: github.ref == 'refs/heads/main'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: chart-${{ github.run_number }}
+          release_name: Weekly Chart Update ${{ github.run_number }}
+          body: |
+            🎵 Weekly Spotify Global Chart Update
+            
+            📅 Generated: ${{ github.event.head_commit.timestamp }}
+            🔢 Chart Range: 1-${{ github.event.inputs.chart_range || '30' }}
+            
+            ### Changes:
+            - Updated chart data from kworb.net
+            - Collected TIDAL credits via Manus Agent
+            - Updated YouTube video links
+            - Generated new HTML page
+            
+            🌐 View the updated chart: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          draft: false
+          prerelease: false
+          
+  notify-completion:
+    needs: update-chart
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: 📧 Notify completion
+        run: |
+          if [ "${{ needs.update-chart.result }}" == "success" ]; then
+            echo "✅ Chart update completed successfully!"
+            echo "🌐 Updated site: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}"
+          else
+            echo "❌ Chart update failed!"
+            echo "🔍 Check the logs for details."
+          fi
+
